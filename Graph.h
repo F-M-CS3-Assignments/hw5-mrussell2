@@ -58,6 +58,7 @@ class Graph{
 	
 	
 	private:
+		//initialize nodes vector and adjList vector
 		vector<nodekey_t> nodes;
 		vector<vector<GraphEdge*>> adjList;
 	

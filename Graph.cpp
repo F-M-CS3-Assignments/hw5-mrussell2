@@ -90,8 +90,6 @@ const GraphEdge *Graph::AddEdge(nodekey_t gnFrom, nodekey_t gnTo, unsigned int w
 
 	GraphEdge *ge = new GraphEdge;
 
-	// TODO:
-	// Do stuff here?  IDK what though
 	ge->from = gnFrom;
 	ge->to = gnTo;
 	ge->weight = w;
@@ -111,12 +109,13 @@ const GraphEdge *Graph::AddEdge(nodekey_t gnFrom, nodekey_t gnTo, unsigned int w
 
 bool Graph::IsPresent(nodekey_t key) const
 {
+	// iterates through this->nodes and looks for one that matches key
+	//returns true if it finds one that matches key and false if not
 	for (size_t i = 0; i < nodes.size(); ++i) {
 		if (nodes[i] == key) return true;
 	}
 	return false;
-	// TODO:
-	// iterate through this->nodes and look for one that matches key
+	
 }
 
 
@@ -136,8 +135,8 @@ set<const GraphEdge*> Graph::GetOutwardEdgesFrom(nodekey_t node) const
 
 
 	set<const GraphEdge*> result = set<const GraphEdge*>();
-	// TODO:
-	// iterate over this->adjList.at(idx); and find nodes that match the given node
+
+	// iterates over this->adjList.at(idx); and finds nodes that match the given node
 	// in their "from" field, put those nodes in result
 	for (GraphEdge* edge : adjList[idx]) {
 		if (edge->from == node) {
@@ -150,8 +149,7 @@ set<const GraphEdge*> Graph::GetOutwardEdgesFrom(nodekey_t node) const
 
  set<nodekey_t> Graph::GetNodes() const 
 {
-	// TODOL
-	// iterate of this->nodes, accumulate into a set<nodekey_t> and return it
+	// iterates of this->nodes, adds them into a set<nodekey_t> result and returns it
 	set<nodekey_t> result;
 	for (nodekey_t key : nodes) {
 		result.insert(key);
@@ -179,7 +177,8 @@ size_t Graph::Size() const
 }
 
 
-
+//returns all the nodes in a string form. 
+//used for debugging and testing
 string Graph::NodesToString() const 
 {
 	if(nodes.size() == 0)
@@ -197,6 +196,8 @@ string Graph::NodesToString() const
 	return str;
 }
 
+//returns all the edges in a string form
+//used for debugging and testing
 string Graph::EdgesToString() const 
 {
 	if(this->adjList.size() == 0)
@@ -229,9 +230,7 @@ string Graph::EdgesToString() const
 
 
 Graph::~Graph() {
-	// TODO:
-	// Right now the memory leaks are bad, I need to
-	// implement something here to fix it
+	//clears up memory and helps fix memory leaks 
 	for (auto &row : adjList) {
 		for (GraphEdge* edge : row) {
 			delete edge;

@@ -9,7 +9,7 @@ bool BetterPriorityQueue::Contains(BPQNode d) const {
 	return false;
 }
 
-// Update the priority of a BPQNode (if it's lower), rebuild heap
+// Update the priority of a BPQNode and rebuild heap
 bool BetterPriorityQueue::Update(BPQNode d) {
 	bool flag = false;
 	vector<BPQNode> items;
@@ -34,7 +34,7 @@ bool BetterPriorityQueue::Update(BPQNode d) {
 	return flag;
 }
 
-// Return string like [(1, pri: 0), (2, pri: 1), ...]
+// Return BPQ in string form for debugging and testing purposes
 string BetterPriorityQueue::ToString() const {
 	stringstream ss;
 	ss << "[";

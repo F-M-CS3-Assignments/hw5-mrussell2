@@ -182,6 +182,35 @@ void TestDestructor(){
 	cout << "NO ERRORS.  Use valgrind to check!" << endl << endl;
 }
 
+//attempting to add duplicate node: should throught invalid_argument exception
+void AddDuplicateNodeTest() {
+	cout << "Testing Adding Duplicate Node" << endl;
+	Graph g;
+	g.AddNode(1);
+	try {
+		g.AddNode(1); // Duplicate
+		assert(false); // Should not reach here
+	} catch (invalid_argument& e) {
+		cout << "Caught expected exception: " << e.what() << endl;
+	}
+	cout << "PASSED!" << endl;
+}
+
+//Testing adding an Edge to a Node that doesn't exist
+void AddEdgeToMissingNodeTest() {
+	cout << "Tesing Adding Edge to Missing Node" << endl;
+	Graph g;
+	g.AddNode(1);
+	try {
+		g.AddEdge(1, 2, 5); // 2 not added
+		assert(false);
+	} catch (invalid_argument& e) {
+		cout << "Caught expected exception: " << e.what() << endl;
+	}
+	cout << "PASSED!" << endl;
+}
+
+
 
 
 int main(){
@@ -192,6 +221,9 @@ int main(){
 	TestGetOutwardEdgesFrom();
 	TestGetNodes();
 	TestDestructor();
+	AddDuplicateNodeTest();
+	AddEdgeToMissingNodeTest();
+	
 
 	
 	cout << "ALL TESTS PASSED!" << endl;

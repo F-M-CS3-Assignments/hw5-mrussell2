@@ -3,15 +3,11 @@
 #include <stdexcept>
 #include <map>
 
-/*
- * Dijkstra's algorithm to find the shortest path from `start` to `end` in a graph.
- * Returns the total weight of the shortest path.
- *
- * Time Complexity: O((V + E) * log V)
- * - Each node is inserted into the priority queue at most once
- * - For each node, we process all outgoing edges
- * - The priority queue rebuild (Update) is not optimal, but acceptable for small to medium graphs
- */
+//  Time Complexity: O((V + E) * log V), reason: 
+// 	Each node is inserted into the priority queue at most once
+// 	For each node, we process all outgoing edges
+// 	The priority queue rebuild (Update) is not optimal, but acceptable for small to medium graphs
+ 
 int dijkstra(nodekey_t start, nodekey_t end, const Graph* g) {
 	if (!g->IsPresent(start) || !g->IsPresent(end)) {
 		throw invalid_argument("Start or end node is not in the graph.");
