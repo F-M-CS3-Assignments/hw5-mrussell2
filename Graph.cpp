@@ -2,12 +2,10 @@
 #include "Graph.h"
 #include <iostream>
 #include <vector>
+#include <stdexcept>
 
 
 using namespace std;
-
-
-
 
 
 
@@ -94,6 +92,17 @@ const GraphEdge *Graph::AddEdge(nodekey_t gnFrom, nodekey_t gnTo, unsigned int w
 
 	// TODO:
 	// Do stuff here?  IDK what though
+	ge->from = gnFrom;
+	ge->to = gnTo;
+	ge->weight = w;
+
+	// Find the row corresponding to gnFrom and insert the edge there
+	for (size_t i = 0; i < nodes.size(); ++i) {
+		if (nodes[i] == gnFrom) {
+			adjList[i].push_back(ge);
+			break;
+		}
+	}
 
 	const GraphEdge *response = ge; // this helps the compiler go
 	return response;
@@ -102,6 +111,10 @@ const GraphEdge *Graph::AddEdge(nodekey_t gnFrom, nodekey_t gnTo, unsigned int w
 
 bool Graph::IsPresent(nodekey_t key) const
 {
+	for (size_t i = 0; i < nodes.size(); ++i) {
+		if (nodes[i] == key) return true;
+	}
+	return false;
 	// TODO:
 	// iterate through this->nodes and look for one that matches key
 }
@@ -126,7 +139,11 @@ set<const GraphEdge*> Graph::GetOutwardEdgesFrom(nodekey_t node) const
 	// TODO:
 	// iterate over this->adjList.at(idx); and find nodes that match the given node
 	// in their "from" field, put those nodes in result
-
+	for (GraphEdge* edge : adjList[idx]) {
+		if (edge->from == node) {
+			result.insert(edge);
+		}
+	}
 
 	return result;
 }
@@ -135,6 +152,11 @@ set<const GraphEdge*> Graph::GetOutwardEdgesFrom(nodekey_t node) const
 {
 	// TODOL
 	// iterate of this->nodes, accumulate into a set<nodekey_t> and return it
+	set<nodekey_t> result;
+	for (nodekey_t key : nodes) {
+		result.insert(key);
+	}
+	return result;
 }
 
 
@@ -210,5 +232,13 @@ Graph::~Graph() {
 	// TODO:
 	// Right now the memory leaks are bad, I need to
 	// implement something here to fix it
+	for (auto &row : adjList) {
+		for (GraphEdge* edge : row) {
+			delete edge;
+		}
+		row.clear();
+	}
+	adjList.clear();
+	nodes.clear();
 }
 
