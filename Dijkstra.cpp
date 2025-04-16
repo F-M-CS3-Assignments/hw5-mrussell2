@@ -6,7 +6,6 @@
 //  Time Complexity: O((V + E) * log V), reason: 
 // 	Each node is inserted into the priority queue at most once
 // 	For each node, we process all outgoing edges
-// 	The priority queue rebuild (Update) is not optimal, but acceptable for small to medium graphs
  
 int dijkstra(nodekey_t start, nodekey_t end, const Graph* g) {
 	if (!g->IsPresent(start) || !g->IsPresent(end)) {
